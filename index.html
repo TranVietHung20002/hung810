@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc nghiệm Tìm hiểu Pháp luật 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .option-btn {
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        .correct {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #166534 !important;
+        }
+        .incorrect {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+        .disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-blue-700 mb-2">Bộ Câu Hỏi Trắc Nghiệm</h1>
+            <p class="text-xl text-gray-600">Tìm hiểu, tuyên truyền pháp luật năm 2026</p>
+            <p class="text-sm text-gray-500 mt-2">Tổng số: <span id="total-questions" class="font-bold">0</span> câu hỏi</p>
+        </header>
+
+        <main id="quiz-container" class="space-y-8">
+            <!-- Questions will be dynamically injected here -->
+        </main>
+    </div>
+
+    <script>
+        // Dữ liệu gốc được giữ nguyên 100% không thay đổi
+        const rawData = `ĐỀ CƯƠNG
+Câu hỏi, đáp án thi tìm hiểu, tuyên truyền pháp luật năm 2026
+Câu 1: Theo quy định của Bộ luật Lao động 2019 thời gian thử việc đối với công việc có chức danh nghề nghiệp cần trình độ chuyên môn, kỹ thuật từ cao đẳng trở lên là?
+A. Không quá 180 ngày 
+B. Không quá 60 ngày 
+C. Không quá 30 ngày 
+D. Không quá 06 ngày
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Khoản 2 Điều 25 Bộ luật Lao động 2019
+Câu 2: Bộ luật Lao động 2019, quy định thời gian điều chuyển người lao động làm công việc khác so với hợp đồng lao động không được quá bao nhiêu lâu?
+A. Không quá 60 ngày làm việc cộng dồn trong 01 năm
+B. Không quá 70 ngày làm việc cộng dồn trong 01 năm
+C. Không quá 80 ngày làm việc cộng dồn trong 01 năm
+D. Không quá 90 ngày làm việc cộng dồn trong 01 năm
+✅ Đáp án đúng: A
+📚 Căn cứ pháp lý: Khoản 1 Điều 29 Bộ luật Lao động 2019
+Câu 3: Theo Luật Công đoàn năm 2024, người lao động là công dân nước ngoài làm việc tại Việt Nam theo hợp đồng lao động được gia nhập và hoạt động công đoàn khi đáp ứng điều kiện nào?
+A. Có thời gian làm việc từ đủ 06 tháng trở lên.
+B. Có giấy phép lao động còn hiệu lực.
+C. Làm việc theo hợp đồng lao động có thời hạn từ đủ 12 tháng trở lên.
+D. Được người sử dụng lao động chấp thuận.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Khoản 2 Điều 5 Luật Công đoàn năm 2024. 
+Câu 4: Theo Luật Công đoàn năm 2024, việc thành lập, gia nhập và hoạt động công đoàn được thực hiện theo quy định nào?
+A. Điều lệ doanh nghiệp.
+B. Bộ luật Lao động.
+C. Nội quy lao động.
+D. Điều lệ Công đoàn Việt Nam, Luật Công đoàn và quy định khác của pháp luật có liên quan.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 3 Điều 5 Luật Công đoàn năm 2024. 
+Câu 5: Theo quy định của Bộ luật Lao động 2019, người sử dụng lao động phải tổ chức đối thoại định kỳ tại nơi làm việc ít nhất là?
+A. Ít nhất 03 tháng một lần 
+B. Ít nhất 06 tháng một lần 
+C. Ít nhất 01 năm một lần 
+D. Do các bên quyết định
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Điểm a, Khoản 2, Điều 63 Bộ luật Lao động 2019
+Câu 6: Theo quy định của Bộ luật Lao động năm 2019, có mấy loại hợp đồng lao động?
+A. 04 loại hợp đồng lao động.
+B. 03 loại hợp đồng lao động.
+C. 02 loại hợp đồng lao động.
+D. 01 loại hợp đồng lao động.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Khoản 1, Điều 20, Bộ luật Lao động năm 2019.
+Câu 7: Theo Bộ luật Lao động năm 2019, người lao động làm việc theo hợp đồng lao động không xác định thời hạn, khi đơn phương chấm dứt hợp đồng trong trường hợp thông thường phải báo trước ít nhất bao nhiêu ngày?
+A. 10 ngày.
+B. 15 ngày.
+C. 30 ngày
+D. 45 ngày
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điểm a khoản 1 Điều 35 Bộ luật Lao động năm 2019
+Câu 8: Theo quy định của Luật Bảo hiểm xã hội năm 2024, người lao động làm việc theo hợp đồng lao động có thời hạn từ đủ bao nhiêu tháng trở lên thì thuộc đối tượng tham gia bảo hiểm xã hội bắt buộc?
+A. Từ đủ 01 tháng.
+B. Từ đủ 03 tháng.
+C. Từ đủ 06 tháng.
+D. Từ đủ 12 tháng.
+✅ Đáp án đúng: A
+📚 Căn cứ pháp lý: Điểm a khoản 1 Điều 2 Luật Bảo hiểm xã hội năm 2024
+Câu 9: Theo Luật Sửa đổi, bổ sung một số điều của Luật Mặt trận Tổ quốc Việt Nam, Luật Công đoàn, Luật Thanh niên và Luật Thực hiện dân chủ ở cơ sở, Công đoàn Việt Nam được tổ chức thống nhất gồm bao nhiêu cấp?
+A. 03 cấp.
+B. 04 cấp.
+C. 05 cấp.
+D. 06 cấp.
+✅ Đáp án đúng: A
+📚 Căn cứ pháp lý: Khoản 3 Điều 2 Luật số 97/2025/QH15, sửa khoản 1 Điều 8 Luật Công đoàn 2024
+Câu 10: Theo Luật Bảo hiểm xã hội năm 2024, người sử dụng lao động đóng vào quỹ ốm đau và thai sản với mức bằng bao nhiêu phần trăm tiền lương làm căn cứ đóng BHXH bắt buộc?
+A. 2%
+B. 3%
+C. 4%
+D. 5%
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Điểm a khoản 1 Điều 32 và điểm a khoản 1 Điều 34 Luật Bảo hiểm xã hội năm 2024
+Câu11: Theo quy định của Luật An toàn, vệ sinh lao động năm 2015, người sử dụng lao động có trách nhiệm tổ chức khám sức khỏe định kỳ cho người lao động làm công việc nặng nhọc, độc hại nguy hiểm hoặc đặc biệt nặng nhọc, độc hại, nguy hiểm như thế nào?
+A. ít nhất 3 tháng một lần
+B. ít nhất 6 tháng một lần
+C. ít nhất 1 năm một lần
+D. Không có quy định riêng cho lao động làm công việc nặng nhọc, độc hại, nguy hiểm.
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Khoản 1 Điều 21 Luật An toàn, vệ sinh lao động năm 2015
+Câu 12: Theo Luật An toàn, vệ sinh lao động năm 2015, người sử dụng lao động có trách nhiệm nào sau đây?
+A. Đóng bảo hiểm tai nạn lao động, bệnh nghề nghiệp cho người lao động.
+B. Thực hiện đầy đủ chế độ đối với người bị tai nạn lao động, bệnh nghề nghiệp cho người lao động
+C. Tổ chức huấn luyện, hướng dẫn các quy định, nội quy, quy trình, biện pháp bảo đảm an toàn, vệ sinh lao động cho người lao động.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 2 Điều 7 Luật An toàn, vệ sinh lao động năm 2015.
+Câu 13: Theo Luật An ninh mạng số 116/2025/QH15, hành vi nào sau đây bị nghiêm cấm ?
+A. Đăng tải, phát tán thông tin có nội dung xuyên tạc lịch sử, phủ nhận thành tựu cách mạng, phá hoại khối đại đoàn kết toàn dân tộc, xúc phạm tôn giáo, phân biệt đối xử về giới, phân biệt chủng tộc.
+B. Kích động, kêu gọi, vận động, xúi giục, đe dọa, gây chia rẽ, tiến hành hoạt động vũ trang hoặc dùng bạo lực nhằm chống chính quyền nhân dân.
+C. Sử dụng trí tuệ nhân tạo hoặc công nghệ mới để giả mạo video, hình ảnh, giọng nói của người khác trái quy định của pháp luật.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điều 7 Luật An ninh mạng số 116/2025/QH15
+Câu 14: Theo quy định của Luật An ninh mạng số 116/2025/QH15, hệ thống thông tin có thể làm tổn hại đặc biệt nghiêm trọng đến lợi ích công cộng, trật tự, an toàn xã hội hoặc làm tổn hại nghiêm trọng đến an ninh quốc gia được phân loại là cấp độ mấy?
+A. Cấp độ 2.
+B. Cấp độ 3.
+C. Cấp độ 4.
+D. Cấp độ 5.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Điểm d, Khoản 1, Điều 8 Luật An ninh mạng số 116/2025/QH15
+Câu 15: Theo Luật An ninh mạng số 116/2025/QH15, Đối tượng kiểm tra an ninh mạng bao gồm các đối tượng nào sau đây?
+A. Phần cứng, phần mềm, thiết bị số được sử dụng trong hệ thống thông tin.
+B. Thông tin được lưu trữ, xử lý, truyền đưa trong hệ thống thông tin.
+C. Biện pháp bảo vệ bí mật nhà nước và phòng, chống lộ, mất bí mật nhà nước qua các kênh kỹ thuật.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 2 Điều 12 Luật An ninh mạng số 116/2025/QH15.
+Câu 16: Theo quy định tại Luật An toàn, vệ sinh lao động năm 2015, người lao động có quyền từ chối làm công việc hoặc rời bỏ nơi làm việc nhưng vẫn phải báo ngay cho ai?
+A. Chủ tịch Công đoàn cơ sở.
+B. Đồng nghiệp cùng làm việc.
+C. Người quản lý trực tiếp.
+D. Người lao động có quyền từ chối làm công việc mà không cần báo cho ai.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Điểm đ khoản 1 Điều 6 Luật An toàn, vệ sinh lao động năm 2015.
+Câu 17: Theo Luật An toàn, vệ sinh lao động năm 2015, công đoàn cơ sở có quyền và trách nhiệm nào sau đây trong công tác an toàn, vệ sinh lao động?
+A. Tham gia với người sử dụng lao động xây dựng và giám sát việc thực hiện kế hoạch, quy định, nội quy, quy trình, biện pháp bảo đảm an toàn, vệ sinh lao động, cải thiện điều kiện lao động.
+B. Tham gia, phối hợp với người sử dụng lao động tổ chức kiểm tra công tác an toàn, vệ sinh lao động.
+C. Kiến nghị với người sử dụng lao động, cơ quan, tổ chức có thẩm quyền thực hiện các biện pháp bảo đảm an toàn, vệ sinh lao động.
+D. Tất cả các đáp án trên
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điều 10 Luật An toàn, vệ sinh lao động năm 2015.
+Câu 18: Theo Luật An toàn, vệ sinh lao động năm 2015, người lao động làm việc trong điều kiện có yếu tố nguy hiểm, yếu tố có hại được người sử dụng lao động bồi dưỡng bằng hiện vật theo nguyên tắc nào?
+A. Giúp tăng cường sức đề kháng và thải độc của cơ thể.
+B. Bảo đảm thuận tiện, an toàn, vệ sinh thực phẩm
+C. Thực hiện trong ca, ngày làm việc, trừ trường hợp đặc biệt do tổ chức lao động không thể tổ chức bồi dưỡng tập trung tại chỗ.
+D. Cả 3 đáp án trên
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 2 Điều 24 Luật An toàn, vệ sinh lao động năm 2015.
+Câu 19: Theo Luật Nghĩa vụ quân sự năm 2015, độ tuổi gọi nhập ngũ trong thời bình là bao nhiêu?
+A. Từ đủ 18 tuổi đến hết 24 tuổi.
+B. Độ tuổi gọi nhập ngũ từ đủ 18 tuổi đến hết 25 tuổi; công dân được đào tạo trình độ cao đẳng, đại học đã được tạm hoãn gọi nhập ngũ thì độ tuổi gọi nhập ngũ đến hết 27 tuổi.
+C. Từ đủ 20 tuổi đến hết 27 tuổi.
+D. Từ đủ 18 tuổi đến hết 30 tuổi.
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Điều 30 Luật Nghĩa vụ quân sự năm 2015.
+Câu 20: Theo Luật Nghĩa vụ quân sự năm 2015, công dân thuộc trường hợp nào sau đây được miễn gọi nhập ngũ trong thời bình?
+A. Đang học đại học hệ chính quy.
+B. Là lao động duy nhất trong gia đình.
+C. Có anh, chị hoặc em ruột là hạ sĩ quan, binh sĩ đang phục vụ tại ngũ.
+D. Con của liệt sĩ hoặc con của thương binh hạng một.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điểm a Khoản 2 Điều 41 Luật Nghĩa vụ quân sự năm 2015.
+Câu 21: Theo quy định của Luật Phòng, chống tác hại của thuốc lá năm 2012, địa điểm công cộng được hiểu là gì?
+A. Nơi làm việc của cơ quan nhà nước.
+B. Khu vực kinh doanh dịch vụ.
+C. Nơi phục vụ chung cho nhu cầu của nhiều người.
+D. Nơi có từ 10 người trở lên.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Khoản 7 Điều 2 Luật Phòng, chống tác hại của thuốc lá năm 2012.
+Câu 22: Theo Luật Phòng, chống tác hại của thuốc lá năm 2012, hành vi nào sau đây bị nghiêm cấm?
+A. Người chưa đủ 18 tuổi sử dụng thuốc lá.
+B. Sử dụng người chưa đủ 18 tuổi mua, bán thuốc lá.
+C. Bán, cung cấp thuốc lá cho người chưa đủ 18 tuổi.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điều 9 Luật Phòng, chống tác hại của thuốc lá năm 2012
+Câu 23: Theo Luật Phòng, chống bạo lực gia đình 2022, nguyên tắc phòng, chống bạo lực gia đình là gì?
+A. Phòng ngừa là chính, lấy người bị bạo lực gia đình là trung tâm.
+B. Chú trọng hoạt động tuyên truyền, giáo dục, tư vấn, hòa giải trong phòng, chống bạo lực gia đình.
+C. Phát huy vai trò, trách nhiệm của cá nhân, gia đình, cộng đồng.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điều 4 Luật Phòng, chống bạo lực gia đình 2022.
+Câu 24: Theo Luật Phòng, chống bạo lực gia đình 2022, quyền nào sau đây là quyền của người bị bạo lực gia đình?
+A. Lợi dụng hoạt động phòng, chống bạo lực gia đình để thực hiện hành vi trái pháp luật
+B. Chiếm đoạt, hủy hoại tài sản chung của gia đình hoặc tài sản riêng của thành viên khác trong gia đình.
+C. Tiết lộ hoặc phát tán thông tin về đời sống riêng tư, bí mật cá nhân và bí mật gia đình của thành viên gia đình nhằm xúc phạm danh dự, nhân phẩm
+D. Khiếu nại, tố cáo, khởi kiện đối với hành vi vi phạm pháp luật về phòng, chống bạo lực gia đình.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điều 9 Luật Phòng, chống bạo lực gia đình 2022
+Câu 25: Theo Luật Trật tự, an toàn giao thông đường bộ năm 2024, người tham gia giao thông đường bộ phải chấp hành theo thứ tự hiệu lệnh nào dưới đây?
+A. Hiệu lệnh của đèn tín hiệu giao thông; biển báo hiệu; người điều khiển giao thông; vạch kẻ đường.
+B. Hiệu lệnh của người điều khiển giao thông; tín hiệu đèn giao thông; biển báo hiệu; vạch kẻ đường và các dấu hiệu khác trên đường.
+C. Biển báo hiệu; tín hiệu đèn giao thông; người điều khiển giao thông; vạch kẻ đường.
+D. Vạch kẻ đường; biển báo hiệu; tín hiệu đèn giao thông; người điều khiển giao thông.
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Khoản 2 Điều 11 Luật Trật tự, an toàn giao thông đường bộ năm 2024.
+Câu 26: Theo Luật Trật tự, an toàn giao thông đường bộ năm 2024, người điều khiển xe mô tô, xe gắn máy khi tham gia giao thông phải thực hiện quy định nào sau đây?
+A. Chỉ đội mũ bảo hiểm khi đi trên quốc lộ.
+B. Đội mũ bảo hiểm nhưng không cần cài quai đúng quy cách.
+C. Đội mũ bảo hiểm có cài quai đúng quy cách theo quy định.
+D. Không bắt buộc đội mũ bảo hiểm nếu đi quãng đường ngắn.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Khoản 2 Điều 33 Luật Trật tự, an toàn giao thông đường bộ năm 2024.
+Câu 27: Theo Luật Trật tự, an toàn giao thông đường bộ năm 2024, hành vi nào dưới đây bị nghiêm cấm?
+A. Chấp hành hiệu lệnh của người điều khiển giao thông.
+B. Dừng xe đúng nơi quy định.
+C. Điều khiển phương tiện tham gia giao thông mà trong máu hoặc hơi thở có nồng độ cồn.
+D. Giảm tốc độ khi đi qua nơi đông người.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Khoản 2 Điều 9 Luật Trật tự, an toàn giao thông đường bộ năm 2024.
+Câu 28: Theo Luật Trật tự, an toàn giao thông đường bộ năm 2024, Người điều khiển phương tiện tham gia giao thông đường bộ gây ra tai nạn giao thông đường bộ, người liên quan đến vụ tai nạn giao thông đường bộ có trách nhiệm gì?
+A. Di chuyển phương tiện rời khỏi hiện trường để tránh ùn tắc giao thông.
+B. Dừng ngay phương tiện, cảnh báo nguy hiểm, giữ nguyên hiện trường, trợ giúp người bị nạn và báo tin cho cơ quan Công an, cơ sở khám bệnh, chữa bệnh hoặc Ủy ban nhân dân nơi gần nhất
+C. Tiếp tục điều khiển phương tiện nếu phương tiện vẫn hoạt động được.
+D. Ngồi trên xe, đóng cửa chờ cơ quan chức năng đến giải quyết.
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Điều 80 Luật Trật tự, an toàn giao thông đường bộ năm 2024.
+Câu 29: Theo Luật Trật tự, an toàn giao thông đường bộ năm 2024, khi tham gia giao thông đường bộ, người lái xe phải mang theo loại giấy tờ sau đây:
+A. Giấy phép lái xe phù hợp với loại xe đang điều khiển.
+B. Chứng nhận bảo hiểm bắt buộc trách nhiệm dân sự của chủ xe cơ giới
+C. Chứng nhận đăng ký xe hoặc bản sao Chứng nhận đăng ký xe có chứng thực kèm bản gốc giấy tờ xác nhận của tổ chức tín dụng, chi nhánh ngân hàng nước ngoài còn hiệu lực trong trường hợp xe đang được thế chấp tại tổ chức tín dụng, chi nhánh ngân hàng nước ngoài.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 1, Điều 56, Luật Trật tự, an toàn giao thông đường bộ năm 2024.
+Câu 30: Theo Luật Trật tự, an toàn giao thông đường bộ năm 2024, không được vượt xe trong trường hợp sau đây:
+A. Không có chướng ngại vật ở phía trước.
+B. Trên đường hai chiều tại khu vực đỉnh dốc có tầm nhìn bị hạn chế
+C. Khi đã bảo đảm đủ các điều kiện an toàn và không thuộc các đoạn đường bị cấm vượt.
+D. Xe chạy phía trước không có tín hiệu vượt xe khác và đã bật tín hiệu rẽ phải để nhường đường
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Điểm d, Khoản 6, Điều 14, Luật Trật tự, an toàn giao thông đường bộ năm 2024
+Câu 31: Theo Luật An ninh mạng số 116/2025/QH15, hành vi nào sau đây được xác định là tấn công mạng?
+A. Là hành vi thực hiện trên không gian mạng bằng việc sử dụng công nghệ thông tin hoặc phương tiện điện tử để chiếm đoạt thông tin, gây rối loạn, gián đoạn, tê liệt hoạt động, phá hoại hoặc kiểm soát hệ thống mạng viễn thông, mạng Internet, mạng máy tính, hệ thống thông tin, hệ thống xử lý và điều khiển thông tin, cơ sở dữ liệu, phương tiện điện tử.
+B. Là hành vi thực hiện trên không gian mạng bằng việc sử dụng công nghệ thông tin hoặc phương tiện điện tử nhằm gây hoảng sợ trong công chúng hoặc làm mất ổn định chính trị.
+C. Là hành vi thực hiện trên không gian mạng bằng việc sử dụng công nghệ thông tin hoặc phương tiện điện tử bí mật xâm nhập để chiếm đoạt, thu thập, sao chép thông tin thuộc phạm vi bí mật nhà nước, dữ liệu quan trọng của cơ quan, tổ chức, cá nhân nhằm mục đích gây phương hại đến an ninh quốc gia, trật tự, an toàn xã hội.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: A
+📚 Căn cứ pháp lý: Khoản 13, Điều 2, Luật An ninh mạng số 116/2025/QH15.
+Câu 32: Theo quy định của Bộ luật Lao động năm 2019, tổng số giờ làm thêm của người lao động trong một tháng với điều kiện bình thường không được vượt quá bao nhiêu giờ?
+A. 30 giờ.
+B. 40 giờ.
+C. 50 giờ.
+D. 60 giờ.
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Điểm b Khoản 2, Điều 107, Bộ luật Lao động năm 2019
+Câu 33: Theo quy định của Bộ luật Lao động năm 2019, người lao động làm việc đủ 12 tháng đối với công việc đặc biệt nặng nhọc, độc hại, nguy hiểm thì được nghỉ hằng năm, hưởng nguyên lương bao nhiêu ngày làm việc?
+A. 16 ngày.
+B. 15 ngày.
+C. 12 ngày.
+D. 10 ngày.
+✅ Đáp án đúng: A
+📚 Căn cứ pháp lý: Điểm c khoản 1 Điều 113 Bộ luật Lao động năm 2019
+Câu 34: Theo quy định của Luật An toàn, vệ sinh lao động năm 2015, người lao động bị tai nạn lao động gây suy giảm khả năng lao động từ bao nhiêu % thì được hưởng chế độ tai nạn lao động?
+A. Từ 3% trở lên.
+B. Từ 5% trở lên.
+C. Từ 10% trở lên.
+D. Từ 15% trở lên
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Khoản 2 Điều 45 Luật An toàn, vệ sinh lao động năm 2015.
+Câu 35: Theo Luật Bảo hiểm xã hội năm 2024, lao động nữ mang thai được nghỉ việc hưởng chế độ thai sản đi khám thai tối đa bao nhiêu lần?
+A. Tối đa 03 lần, mỗi lần không quá 01 ngày.
+B. Tối đa 04 lần, mỗi lần không quá 01 ngày.
+C. Tối đa 05 lần, mỗi lần không quá 02 ngày.
+D. Tối đa 05 lần, mỗi lần không quá 01 ngày.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Khoản 1, Điều 51, Luật Bảo hiểm xã hội năm 2024
+Câu 36: Theo quy định của Bộ luật Lao động năm 2019, Người lao động làm việc theo ca được nghỉ ít nhất bao nhiêu giờ trước khi chuyển sang ca làm việc khác?
+A. 06 giờ.
+B. 10 giờ.
+C. 12 giờ.
+D. 24 giờ.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Điều 110, Bộ luật Lao động năm 2019
+Câu 37: Theo quy định của Luật Bảo vệ dữ liệu cá nhân 2025, khái niệm “Dữ liệu cá nhân nhạy cảm” là như thế nào?
+A. Là dữ liệu cá nhân phản ánh các yếu tố nhân thân, lai lịch phổ biến, thường xuyên sử dụng trong các giao dịch, quan hệ xã hội, thuộc danh mục do Chính phủ ban hành.
+B. Là dữ liệu cá nhân gắn liền với quyền riêng tư của cá nhân, khi bị xâm phạm sẽ gây ảnh hưởng trực tiếp đến quyền, lợi ích hợp pháp của cơ quan, tổ chức, cá nhân, thuộc danh mục do Chính phủ ban hành.
+C. Là dữ liệu nhạy cảm của một cơ quan, đơn vị. 
+D. Là dữ liệu cá nhân sau khi khử nhận dạng.
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Khoản 3, Điều 2, Luật Bảo vệ dữ liệu cá nhân 2025.
+Câu 38: Theo quy định của Luật Bảo vệ dữ liệu cá nhân 2025, chủ thể dữ liệu cá nhân có quyền gì?
+A. Cung cấp đầy đủ, chính xác dữ liệu cá nhân của mình theo quy định của pháp luật, theo hợp đồng hoặc khi đồng ý cho phép xử lý dữ liệu cá nhân của mình.
+B. Tự bảo vệ dữ liệu cá nhân của mình.
+C. Đồng ý hoặc không đồng ý, yêu cầu rút lại sự đồng ý cho phép xử lý dữ liệu cá nhân.
+D. Tôn trọng, bảo vệ dữ liệu cá nhân của người khác
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Điểm b, Khoản 1, Điều 4, Luật Bảo vệ dữ liệu cá nhân 2025.
+Câu 39: Theo quy định của Luật Phòng, chống bạo lực gia đình năm 2022, có những biện pháp ngăn chặn hành vi bạo lực gia đình và bảo vệ, hỗ trợ người bị bạo lực gia đình nào?
+A. Cấm tiếp xúc.
+B. Thực hiện công việc phục vụ cộng đồng.
+C. Góp ý, phê bình người có hành vi bạo lực gia đình trong cộng đồng dân cư.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 1, Điều 22, Luật Phòng, chống bạo lực gia đình năm 2022.
+Câu 40: Theo quy định của Luật Trật tự, giao thông đường bộ năm 2024, người lái xe, người điều khiển xe máy chuyên dùng tham gia giao thông đường bộ phải bật đèn chiếu sáng phía trước trong khoảng thời gian nào?
+A. Từ 17 giờ ngày hôm trước đến 05 giờ ngày hôm sau.
+B. Từ 18 giờ ngày hôm trước đến 06 giờ ngày hôm sau.
+C. Từ 19 giờ ngày hôm trước đến 06 giờ ngày hôm sau.
+D. Từ 19 giờ ngày hôm trước đến 05 giờ ngày hôm sau.
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Khoản 1, Điều 20, Luật Trật tự, giao thông đường bộ năm 2024.
+Câu 41: Theo Luật Đất đai năm 2024, người sử dụng đất có quyền chung nào sau đây?
+A. Được cấp Giấy chứng nhận quyền sử dụng đất, quyền sở hữu tài sản gắn liền với đất khi có đủ điều kiện theo quy định của pháp luật về đất đai.
+B. Hưởng thành quả lao động, kết quả đầu tư trên đất sử dụng hợp pháp.
+C. Được Nhà nước bảo hộ khi người khác xâm phạm quyền, lợi ích hợp pháp về đất đai của mình.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 1, khoản 2 và khoản 5 Điều 26 Luật Đất đai số 31/2024/QH15; Văn bản hợp nhất số 133/VBHN-VPQH ngày 03/9/2025.
+Câu 42: Theo Luật Đất đai năm 2024, hành vi nào sau đây bị nghiêm cấm trong lĩnh vực đất đai?
+A. Lấn đất, chiếm đất, hủy hoại đất.
+B. Sử dụng đất đúng mục đích.
+C. Thực hiện quyền của người sử dụng đất theo quy định của pháp luật.
+D. Đăng ký đất đai theo quy định.
+✅ Đáp án đúng: A
+📚 Căn cứ pháp lý: Khoản 1 Điều 11 Luật Đất đai số 31/2024/QH15.
+Câu 43: Theo Luật Đất đai năm 2024, người sử dụng đất có nghĩa vụ nào sau đây?
+A. Sử dụng đất đúng mục đích, đúng ranh giới thửa đất và tuân thủ quy định của pháp luật có liên quan.
+B. Thực hiện kê khai, đăng ký đất đai và các thủ tục theo quy định.
+C. Thực hiện nghĩa vụ tài chính về đất đai theo quy định của pháp luật.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 1, khoản 2 và khoản 3 Điều 31 Luật Đất đai số 31/2024/QH15.
+Câu 44: Theo Luật Đất đai năm 2024, Nhà nước thu hồi đất trong trường hợp nào sau đây?
+A. Thu hồi đất vì mục đích quốc phòng, an ninh.
+B. Thu hồi đất để phát triển kinh tế - xã hội vì lợi ích quốc gia, công cộng theo quy định.
+C. Thu hồi đất do người sử dụng đất vi phạm pháp luật về đất đai theo quy định.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điều 78, Điều 79 và Điều 81 Luật Đất đai số 31/2024/QH15.
+Câu 45: Theo Luật Đất đai năm 2024, trường hợp chuyển mục đích sử dụng đất thuộc khoản 1 Điều 121 thì người sử dụng đất phải thực hiện như thế nào?
+A. Tự ý chuyển mục đích sử dụng đất nếu thấy phù hợp với nhu cầu.
+B. Chỉ cần thông báo với chính quyền địa phương.
+C. Phải được cơ quan nhà nước có thẩm quyền cho phép và thực hiện nghĩa vụ tài chính theo quy định của pháp luật.
+D. Chỉ cần được người sử dụng đất liền kề đồng ý.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Khoản 1 và khoản 2 Điều 121 Luật Đất đai số 31/2024/QH15.
+Câu 46: Theo Luật Bảo vệ môi trường năm 2020, bảo vệ môi trường là quyền, nghĩa vụ và trách nhiệm của ai?
+A. Cơ quan quản lý nhà nước.
+B. Các tổ chức, cá nhân.
+C. Cộng đồng dân cư.
+D. Mọi cơ quan, tổ chức, cộng đồng dân cư, hộ gia đình và cá nhân.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 1 Điều 4 Luật Bảo vệ môi trường số 72/2020/QH14.
+Câu 47: Theo Luật Bảo vệ môi trường năm 2020, hành vi nào sau đây bị nghiêm cấm?
+A. Vận chuyển, chôn, lấp, đổ thải, đốt chất thải rắn, chất thải nguy hại không đúng quy trình kỹ thuật, quy định của pháp luật về bảo vệ môi trường.
+B. Phân loại chất thải theo quy định.
+C. Thu gom chất thải đúng quy định.
+D. Tái sử dụng, tái chế chất thải phù hợp với quy định.
+✅ Đáp án đúng: A
+📚 Căn cứ pháp lý: Khoản 1 Điều 6 Luật Bảo vệ môi trường số 72/2020/QH14.
+Câu 48: Theo Luật Lâm nghiệp hiện hành, hành vi nào sau đây bị nghiêm cấm trong hoạt động lâm nghiệp?
+A. Chặt, phá, khai thác, lấn, chiếm rừng trái quy định của pháp luật.
+B. Trồng rừng theo quy định.
+C. Phòng cháy, chữa cháy rừng theo quy định.
+D. Bảo vệ và phát triển rừng theo quy định.
+✅ Đáp án đúng: A
+📚 Căn cứ pháp lý: Khoản 1 Điều 9 Luật Lâm nghiệp số 16/2017/QH14, được hợp nhất tại Văn bản hợp nhất số 68/VBHN-VPQH ngày 24/3/2026.
+Câu 49: Theo Luật Lâm nghiệp hiện hành, trách nhiệm bảo vệ rừng thuộc về ai?
+A. Cơ quan nhà nước.
+B. Chủ rừng.
+C. Tổ chức, hộ gia đình, cá nhân và cộng đồng dân cư.
+D. Cơ quan nhà nước, tổ chức, hộ gia đình, cá nhân và cộng đồng dân cư.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Khoản 1 Điều 43 Luật Lâm nghiệp số 16/2017/QH14, được hợp nhất tại Văn bản hợp nhất số 68/VBHN-VPQH ngày 24/3/2026.
+Câu 50: Theo Luật Lâm nghiệp, khi phát hiện cháy rừng, sinh vật gây hại rừng hoặc hành vi vi phạm quy định về quản lý, bảo vệ rừng, tổ chức, hộ gia đình, cá nhân và cộng đồng dân cư có trách nhiệm gì?
+A. Không cần thông báo vì đây là trách nhiệm của lực lượng Kiểm lâm.
+B. Kịp thời thông báo cho cơ quan nhà nước có thẩm quyền hoặc chủ rừng.
+C. Tự ý xử lý bằng mọi biện pháp.
+D. Chỉ thông báo khi vụ việc gây thiệt hại lớn.
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Khoản 2 Điều 43 Luật Lâm nghiệp số 16/2017/QH14, được hợp nhất tại Văn bản hợp nhất số 68/VBHN-VPQH ngày 24/3/2026.
+Câu 51: Theo Hiến pháp nước Cộng hòa xã hội chủ nghĩa Việt Nam, các dân tộc ở Việt Nam có địa vị như thế nào?
+A. Dân tộc đa số có quyền và nghĩa vụ cao hơn dân tộc thiểu số.
+B. Các dân tộc bình đẳng, đoàn kết, tôn trọng và giúp nhau cùng phát triển.
+C. Chỉ các dân tộc thiểu số được Nhà nước bảo đảm quyền lợi.
+D. Mỗi dân tộc tự thực hiện chính sách riêng, không cần sự quản lý thống nhất của Nhà nước.
+✅ Đáp án đúng: B
+📚 Căn cứ pháp lý: Khoản 2 Điều 5 Hiến pháp nước Cộng hòa xã hội chủ nghĩa Việt Nam năm 2013.
+Câu 52: Theo Luật Tín ngưỡng, tôn giáo hiện đang có hiệu lực trong năm 2026, mọi người có quyền nào sau đây?
+A. Theo hoặc không theo một tôn giáo nào.
+B. Theo một tôn giáo bất kỳ và không phải tuân thủ pháp luật.
+C. Ép buộc người khác theo tôn giáo của mình.
+D. Lợi dụng hoạt động tín ngưỡng, tôn giáo để thực hiện hành vi vi phạm pháp luật.
+✅ Đáp án đúng: A
+📚 Căn cứ pháp lý: Khoản 1 Điều 6 Luật Tín ngưỡng, tôn giáo số 02/2016/QH14.
+Câu 53: Theo Luật Tín ngưỡng, tôn giáo hiện hành, hành vi nào sau đây bị nghiêm cấm?
+A. Phân biệt đối xử, kỳ thị vì lý do tín ngưỡng, tôn giáo.
+B. Ép buộc, mua chuộc hoặc cản trở người khác theo hoặc không theo tín ngưỡng, tôn giáo.
+C. Lợi dụng hoạt động tín ngưỡng, tôn giáo để thực hiện hành vi vi phạm pháp luật.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điều 5 Luật Tín ngưỡng, tôn giáo số 02/2016/QH14.
+Câu 54: Theo chính sách dân tộc của Nhà nước Việt Nam, nội dung nào sau đây được Hiến pháp xác định?
+A. Các dân tộc bình đẳng, đoàn kết, tôn trọng và giúp nhau cùng phát triển.
+B. Nghiêm cấm mọi hành vi kỳ thị, chia rẽ dân tộc.
+C. Nhà nước thực hiện chính sách phát triển toàn diện và tạo điều kiện để các dân tộc thiểu số phát huy nội lực, cùng phát triển với đất nước.
+D. Cả 3 đáp án trên.
+✅ Đáp án đúng: D
+📚 Căn cứ pháp lý: Điều 5 Hiến pháp năm 2013; Nghị quyết số 88/2019/QH14 của Quốc hội.
+Câu 55: Theo Luật Tín ngưỡng, tôn giáo năm 2016, hành vi nào sau đây bị nghiêm cấm?
+A. Tuyên truyền, vận động chức sắc, chức việc, nhà tu hành, tín đồ và Nhân dân thực hiện chính sách, pháp luật về tín ngưỡng, tôn giáo.
+B. Tham gia các hoạt động tín ngưỡng, tôn giáo theo quy định của pháp luật.
+C. Lợi dụng hoạt động tín ngưỡng, tôn giáo để chia rẽ dân tộc, chia rẽ tôn giáo, chia rẽ người theo tín ngưỡng, tôn giáo với người không theo tín ngưỡng, tôn giáo.
+D. Thực hiện các hoạt động tín ngưỡng, tôn giáo tại cơ sở tín ngưỡng, cơ sở tôn giáo hợp pháp.
+✅ Đáp án đúng: C
+📚 Căn cứ pháp lý: Khoản 4 Điều 5 Luật Tín ngưỡng, tôn giáo số 02/2016/QH14 ngày 18/11/2016./.`;
+
+        const questions = [];
+        
+        // Phân tách text thành mảng các câu hỏi (bắt đầu bằng "Câu X:")
+        const blocks = rawData.split(/(?=Câu\s*\d+:)/);
+
+        blocks.forEach((block, index) => {
+            if (!block.trim() || !block.includes('✅')) return;
+
+            // Xử lý bằng Regex an toàn để lấy các thành phần
+            const qMatch = block.match(/(Câu\s*\d+:.*?)(?=\nA\.)/s);
+            const aMatch = block.match(/A\.\s*(.*?)(?=\nB\.)/s);
+            const bMatch = block.match(/B\.\s*(.*?)(?=\nC\.)/s);
+            const cMatch = block.match(/C\.\s*(.*?)(?=\nD\.)/s);
+            const dMatch = block.match(/D\.\s*(.*?)(?=\n✅)/s);
+            const ansMatch = block.match(/✅ Đáp án đúng:\s*([A-D])/);
+            const basisMatch = block.match(/📚 Căn cứ pháp lý:\s*(.*)/);
+
+            if (qMatch && aMatch && bMatch && cMatch && dMatch && ansMatch) {
+                questions.push({
+                    id: index,
+                    question: qMatch[1].trim().replace(/\n/g, '<br>'),
+                    options: {
+                        'A': aMatch[1].trim(),
+                        'B': bMatch[1].trim(),
+                        'C': cMatch[1].trim(),
+                        'D': dMatch[1].trim()
+                    },
+                    correctAnswer: ansMatch[1].trim(),
+                    basis: basisMatch ? basisMatch[1].trim() : ""
+                });
+            }
+        });
+
+        document.getElementById('total-questions').textContent = questions.length;
+        const container = document.getElementById('quiz-container');
+
+        // Hiển thị các câu hỏi
+        questions.forEach((q, i) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'bg-white p-6 rounded-lg shadow-md border border-gray-200';
+            
+            let optionsHtml = '';
+            for (const [key, value] of Object.entries(q.options)) {
+                optionsHtml += `
+                    <button 
+                        class="option-btn w-full text-left p-4 rounded-lg border-2 border-gray-200 mb-3 font-medium text-gray-700" 
+                        data-key="${key}" 
+                        onclick="checkAnswer(this, '${key}', '${q.correctAnswer}', 'basis-${q.id}')"
+                    >
+                        <span class="font-bold mr-2">${key}.</span> ${value}
+                    </button>
+                `;
+            }
+
+            questionEl.innerHTML = `
+                <h2 class="text-lg font-bold text-gray-800 mb-4">${q.question}</h2>
+                <div class="options-container" id="options-${q.id}">
+                    ${optionsHtml}
+                </div>
+                <div id="basis-${q.id}" class="hidden mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded text-blue-800">
+                    <p class="font-bold flex items-center"><span class="mr-2">📚</span> Căn cứ pháp lý:</p>
+                    <p class="mt-1 ml-6">${q.basis}</p>
+                </div>
+            `;
+            
+            container.appendChild(questionEl);
+        });
+
+        // Xử lý khi người dùng chọn đáp án
+        function checkAnswer(button, selected, correct, basisId) {
+            const container = button.closest('.options-container');
+            const buttons = container.querySelectorAll('button');
+            
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('disabled');
+                const btnKey = btn.getAttribute('data-key');
+                
+                // Highlight đáp án đúng
+                if (btnKey === correct) {
+                    btn.classList.add('correct');
+                }
+                
+                // Highlight đáp án sai nếu người dùng chọn sai
+                if (btnKey === selected && selected !== correct) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            // Hiển thị căn cứ pháp lý
+            const basisEl = document.getElementById(basisId);
+            basisEl.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
