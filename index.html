@@ -6,12 +6,23 @@
     <title>Trắc nghiệm Tìm hiểu Pháp luật 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        body {
+            background-color: #f3f4f6;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        .flashcard {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
         .option-btn {
             transition: all 0.2s ease;
         }
         .option-btn:hover:not(:disabled) {
-            background-color: #f3f4f6;
+            background-color: #f9fafb;
             border-color: #9ca3af;
+            transform: translateY(-1px);
+        }
+        .option-btn:active:not(:disabled) {
+            transform: translateY(0);
         }
         .correct {
             background-color: #dcfce7 !important;
@@ -25,26 +36,71 @@
         }
         .disabled {
             cursor: not-allowed;
-            opacity: 0.7;
+            opacity: 0.8;
+        }
+        .basis-animation {
+            animation: slideDown 0.3s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans p-4 md:p-8">
+<body class="min-h-screen flex flex-col items-center p-4 md:p-8 text-gray-800">
 
-    <div class="max-w-4xl mx-auto">
-        <header class="text-center mb-10">
-            <h1 class="text-3xl font-bold text-blue-700 mb-2">Bộ Câu Hỏi Trắc Nghiệm</h1>
-            <p class="text-xl text-gray-600">Tìm hiểu, tuyên truyền pháp luật năm 2026</p>
-            <p class="text-sm text-gray-500 mt-2">Tổng số: <span id="total-questions" class="font-bold">0</span> câu hỏi</p>
-        </header>
+    <header class="text-center mb-8 w-full max-w-3xl">
+        <h1 class="text-2xl md:text-3xl font-bold text-blue-700 mb-2">Bộ Câu Hỏi Trắc Nghiệm</h1>
+        <p class="text-lg text-gray-600">Tìm hiểu, tuyên truyền pháp luật năm 2026</p>
+    </header>
 
-        <main id="quiz-container" class="space-y-8">
-            <!-- Questions will be dynamically injected here -->
-        </main>
-    </div>
+    <main class="w-full max-w-2xl flex-1 flex flex-col items-center">
+        <!-- Flashcard Container -->
+        <div class="flashcard bg-white w-full rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100 relative">
+            
+            <!-- Progress Indicator -->
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <span class="text-sm font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-wider" id="progress-text">
+                    Câu 0 / 0
+                </span>
+                <span class="text-xs text-gray-400">Flashcard Mode</span>
+            </div>
+
+            <!-- Question -->
+            <div class="mb-6">
+                <h2 id="question-text" class="text-lg md:text-xl font-bold text-gray-800 whitespace-pre-line leading-relaxed">
+                    Đang tải câu hỏi...
+                </h2>
+            </div>
+
+            <!-- Options -->
+            <div id="options-container" class="space-y-3">
+                <!-- Buttons will be injected here -->
+            </div>
+
+            <!-- Legal Basis (Căn cứ pháp lý) -->
+            <div id="basis-container" class="hidden mt-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg basis-animation">
+                <p class="font-bold flex items-center text-blue-800 mb-1">
+                    <span class="mr-2 text-xl">📚</span> Căn cứ pháp lý:
+                </p>
+                <p id="basis-text" class="text-blue-900 ml-7 leading-relaxed"></p>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between w-full mt-6 space-x-4">
+            <button id="prev-btn" onclick="prevQuestion()" class="flex-1 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-xl shadow-sm hover:bg-gray-50 hover:text-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Câu trước
+            </button>
+            <button id="next-btn" onclick="nextQuestion()" class="flex-1 bg-blue-600 text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center">
+                Câu tiếp theo
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+    </main>
 
     <script>
-        // Dữ liệu gốc được giữ nguyên 100% không thay đổi
         const rawData = `ĐỀ CƯƠNG
 Câu hỏi, đáp án thi tìm hiểu, tuyên truyền pháp luật năm 2026
 Câu 1: Theo quy định của Bộ luật Lao động 2019 thời gian thử việc đối với công việc có chức danh nghề nghiệp cần trình độ chuyên môn, kỹ thuật từ cao đẳng trở lên là?
@@ -431,17 +487,14 @@ B. Tham gia các hoạt động tín ngưỡng, tôn giáo theo quy định củ
 C. Lợi dụng hoạt động tín ngưỡng, tôn giáo để chia rẽ dân tộc, chia rẽ tôn giáo, chia rẽ người theo tín ngưỡng, tôn giáo với người không theo tín ngưỡng, tôn giáo.
 D. Thực hiện các hoạt động tín ngưỡng, tôn giáo tại cơ sở tín ngưỡng, cơ sở tôn giáo hợp pháp.
 ✅ Đáp án đúng: C
-📚 Căn cứ pháp lý: Khoản 4 Điều 5 Luật Tín ngưỡng, tôn giáo số 02/2016/QH14 ngày 18/11/2016./.`;
+📚 Căn cứ pháp lý: Khoản 4 Điều 5 Luật Tín ngưỡng, tôn giáo số 02/2016/QH14 ngày 18/11/2016.`;
 
-        const questions = [];
-        
-        // Phân tách text thành mảng các câu hỏi (bắt đầu bằng "Câu X:")
+        let questions = [];
         const blocks = rawData.split(/(?=Câu\s*\d+:)/);
 
-        blocks.forEach((block, index) => {
+        blocks.forEach((block) => {
             if (!block.trim() || !block.includes('✅')) return;
 
-            // Xử lý bằng Regex an toàn để lấy các thành phần
             const qMatch = block.match(/(Câu\s*\d+:.*?)(?=\nA\.)/s);
             const aMatch = block.match(/A\.\s*(.*?)(?=\nB\.)/s);
             const bMatch = block.match(/B\.\s*(.*?)(?=\nC\.)/s);
@@ -452,8 +505,7 @@ D. Thực hiện các hoạt động tín ngưỡng, tôn giáo tại cơ sở t
 
             if (qMatch && aMatch && bMatch && cMatch && dMatch && ansMatch) {
                 questions.push({
-                    id: index,
-                    question: qMatch[1].trim().replace(/\n/g, '<br>'),
+                    question: qMatch[1].trim(),
                     options: {
                         'A': aMatch[1].trim(),
                         'B': bMatch[1].trim(),
@@ -466,66 +518,96 @@ D. Thực hiện các hoạt động tín ngưỡng, tôn giáo tại cơ sở t
             }
         });
 
-        document.getElementById('total-questions').textContent = questions.length;
-        const container = document.getElementById('quiz-container');
+        let currentIndex = 0;
+        let userAnswers = {}; // Lưu trữ: userAnswers[index] = 'A'/'B'/'C'/'D'
 
-        // Hiển thị các câu hỏi
-        questions.forEach((q, i) => {
-            const questionEl = document.createElement('div');
-            questionEl.className = 'bg-white p-6 rounded-lg shadow-md border border-gray-200';
+        // Thuật toán xáo trộn mảng ngẫu nhiên (Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Xáo trộn ngẫu nhiên mỗi khi tải trang
+        shuffleArray(questions);
+
+        function renderQuestion() {
+            const q = questions[currentIndex];
             
-            let optionsHtml = '';
+            // Cập nhật tiến trình
+            document.getElementById('progress-text').textContent = `Câu ${currentIndex + 1} / ${questions.length}`;
+            
+            // Cập nhật câu hỏi
+            document.getElementById('question-text').textContent = q.question;
+
+            // Render đáp án
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            const answered = userAnswers[currentIndex]; // Đã trả lời chưa?
+
             for (const [key, value] of Object.entries(q.options)) {
-                optionsHtml += `
-                    <button 
-                        class="option-btn w-full text-left p-4 rounded-lg border-2 border-gray-200 mb-3 font-medium text-gray-700" 
-                        data-key="${key}" 
-                        onclick="checkAnswer(this, '${key}', '${q.correctAnswer}', 'basis-${q.id}')"
-                    >
-                        <span class="font-bold mr-2">${key}.</span> ${value}
-                    </button>
-                `;
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full text-left p-4 rounded-xl border-2 border-gray-200 font-medium text-gray-700 bg-white`;
+                btn.innerHTML = `<span class="font-bold mr-2 text-blue-600">${key}.</span> ${value}`;
+                
+                if (answered) {
+                    // Nếu câu này đã từng trả lời
+                    btn.disabled = true;
+                    btn.classList.add('disabled');
+                    if (key === q.correctAnswer) {
+                        btn.classList.add('correct'); // Luôn hiện màu xanh cho đáp án đúng
+                    }
+                    if (key === answered && answered !== q.correctAnswer) {
+                        btn.classList.add('incorrect'); // Hiện màu đỏ nếu người dùng chọn sai
+                    }
+                } else {
+                    // Nếu chưa trả lời thì gắn sự kiện click
+                    btn.onclick = () => selectAnswer(key);
+                }
+                
+                optionsContainer.appendChild(btn);
             }
 
-            questionEl.innerHTML = `
-                <h2 class="text-lg font-bold text-gray-800 mb-4">${q.question}</h2>
-                <div class="options-container" id="options-${q.id}">
-                    ${optionsHtml}
-                </div>
-                <div id="basis-${q.id}" class="hidden mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded text-blue-800">
-                    <p class="font-bold flex items-center"><span class="mr-2">📚</span> Căn cứ pháp lý:</p>
-                    <p class="mt-1 ml-6">${q.basis}</p>
-                </div>
-            `;
-            
-            container.appendChild(questionEl);
-        });
+            // Hiển thị hoặc ẩn căn cứ pháp lý
+            const basisContainer = document.getElementById('basis-container');
+            if (answered) {
+                document.getElementById('basis-text').textContent = q.basis;
+                basisContainer.classList.remove('hidden');
+            } else {
+                basisContainer.classList.add('hidden');
+            }
 
-        // Xử lý khi người dùng chọn đáp án
-        function checkAnswer(button, selected, correct, basisId) {
-            const container = button.closest('.options-container');
-            const buttons = container.querySelectorAll('button');
-            
-            buttons.forEach(btn => {
-                btn.disabled = true;
-                btn.classList.add('disabled');
-                const btnKey = btn.getAttribute('data-key');
-                
-                // Highlight đáp án đúng
-                if (btnKey === correct) {
-                    btn.classList.add('correct');
-                }
-                
-                // Highlight đáp án sai nếu người dùng chọn sai
-                if (btnKey === selected && selected !== correct) {
-                    btn.classList.add('incorrect');
-                }
-            });
-
-            // Hiển thị căn cứ pháp lý
-            const basisEl = document.getElementById(basisId);
-            basisEl.classList.remove('hidden');
+            // Cập nhật trạng thái nút điều hướng
+            document.getElementById('prev-btn').disabled = currentIndex === 0;
+            document.getElementById('next-btn').disabled = currentIndex === questions.length - 1;
         }
+
+        function selectAnswer(selectedKey) {
+            const q = questions[currentIndex];
+            userAnswers[currentIndex] = selectedKey; // Lưu lại trạng thái
+            
+            // Giao diện: Cập nhật lại ngay lập tức
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        // Bắt đầu ứng dụng
+        renderQuestion();
     </script>
 </body>
 </html>
